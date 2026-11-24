@@ -1,0 +1,757 @@
+/*
+IPDC Finance - Landing page layanan keuangan
+Proyek latihan CSS Dasar dan CSS Layout
+Cara membaca file ini:
+- File disusun per BAGIAN halaman: [0], [1], [A], [B], ... [I]
+- Setiap bagian ditulis "mobile first": gaya untuk ponsel dulu,
+  lalu @media (min-width: ... ) untuk layar yang lebih lebar.
+- Breakpoint: 768px (tablet) dan 1024px (desktop).
+Palet warna:
+Pink utama #ee0b81    Pink hover #c4086a   Pink muda #fde8f3
+Teks judul #16162a    Teks isi #4b4b5f     Abu #9a9aab
+Garis #e3d3dc         Pink garis #f7c6de
+Font: Manrope (seluruh halaman) dan Rubik (tombol pink)
+
+/* ==== [0] RESET ==== */
+/* Reset ditaruh di @layer agar mudah dikalahkan oleh aturan di bawahnya.
+Aturan di luar layer selalu lebih kuat daripada aturan di dalam layer. */
+@layer reset {
+    *, *::before, *::after {
+        box-sizing: border-box;      /* width sudah termasuk padding + border */
+    }
+    body, h1, h2, h3, h4, p, ul, figure, blockquote {
+        margin: 0;                   /* hapus margin bawaan browser */
+    }
+    ul {
+        padding: 0;
+        list-style: none;            /* hapus bullet bawaan */
+    }
+    img {
+        max-width: 100%;             /* gambar tidak boleh lebih lebar dari induknya */
+        display: block;              /* hapus celah kecil di bawah gambar */
+    }
+    a {
+        color: inherit;              /* warna link mengikuti induk */
+        text-decoration: none;       /* hapus garis bawah link */
+    }
+    input, select, button {
+        font: inherit;               /* form memakai font halaman */
+        color: inherit;
+    }
+}
+/* ==== [1] DASAR ==== */
+html { scroll-behavior: smooth; }    /* scroll halus saat klik link #id */
+
+body {
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4b4b5f;
+    background: #ffffff;
+}
+h1, h2, h3, h4 {
+    color: #16162a;
+    line-height: 1.2;
+    font-weight: 700;
+}
+/* Pembungkus konten: lebar maksimal 1288px dan selalu di tengah.
+.hero-kontak ikut memakai aturan ini agar sejajar dengan konten hero */
+.container,
+.hero-kontak {
+    width: 100%;
+    max-width: 1288px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+.bagian { padding: 64px 0; }         /* jarak atas-bawah setiap bagian */
+.bagian-pink { background: #fde8f3; }
+
+.judul-bagian { font-size: 28px; }
+.judul-kecil {
+    margin-bottom: 32px;
+    text-align: center;
+    font-size: 24px;
+}
+.pink { color: #ee0b81; }
+
+/* Judul + paragraf pembuka yang rata tengah (bagian C dan G) */
+.judul-tengah {
+    max-width: 760px;
+    margin: 0 auto 48px;
+    text-align: center;
+}
+.judul-tengah h2 { margin-bottom: 12px; }
+/* Tombol persegi sudut membulat, dipakai di beberapa bagian */
+.tombol {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 1.5px solid #ee0b81;
+    border-radius: 4px;
+    background: #ee0b81;
+    color: #ffffff;
+    font-family: "Rubik", "Manrope", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.2;
+    text-transform: capitalize;      /* "Ajukan secara online" -> "Ajukan Secara Online" */
+    cursor: pointer;
+}
+.tombol:hover {
+    background: #c4086a;
+    border-color: #c4086a;
+}
+.tombol-garis {
+    background: transparent;
+    color: #ee0b81;
+}
+.tombol-garis:hover {
+    background: #fde8f3;
+    color: #c4086a;
+}
+
+/* Link "Baca Selengkapnya ->" */
+.tautan {
+    color: #ee0b81;
+    font-weight: 700;
+    font-size: 15px;
+}
+.tautan span { display: inline-block; }
+.tautan:hover span { transform: translateX(4px); }   /* panah bergeser saat hover */
+
+/* Foto bersudut bulat */
+.foto {
+    width: 100%;
+    border-radius: 16px;
+}
+
+/* Titik penunjuk slide (dipakai di hero dan mitra) */
+.hero-titik li,
+.titik li {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d4d4de;
+}
+.hero-titik li.aktif,
+.titik li.aktif { background: #ee0b81; }
+
+/* Ikon sosial: tiap ikon punya warna merek masing-masing */
+.sosial {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.sosial svg { width: 18px; height: 18px; }
+.sosial a:nth-child(1) svg { fill: #1877f2; }    /* Facebook */
+.sosial a:nth-child(2) svg { fill: #ff0000; }    /* YouTube */
+.sosial a:nth-child(3) svg { fill: #0a66c2; }    /* LinkedIn */
+.sosial a:nth-child(4) svg { fill: #ee0b81; }    /* Instagram */
+
+/* Nomor telepon (hero dan footer) */
+.telepon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #16162a;
+    font-weight: 700;
+    font-size: 15px;
+}
+.telepon img,
+.telepon svg {
+    width: 22px;
+    height: 22px;
+}
+.telepon svg { fill: #ee0b81; }
+
+/* Tautan #id tidak tertutup navbar yang menempel di atas */
+section[id] { scroll-margin-top: 80px; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #f7c6de;
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .container,
+    .hero-kontak { padding: 0 24px; }
+    .judul-bagian { font-size: 32px; }
+    .judul-kecil { font-size: 26px; }
+}
+@media (min-width: 1024px) {
+    .bagian { padding: 80px 0; }
+    .judul-bagian { font-size: 36px; }
+    .judul-tengah { margin-bottom: 56px; }
+}
+
+/* ==== [A] HEADER & MENU ==== */
+.navbar {
+    position: sticky;                /* menempel di atas saat di-scroll */
+    top: 0;
+    z-index: 100;                    /* selalu di depan elemen lain */
+    background: #ffffff;
+    box-shadow: 0 1px 0 rgba(22, 22, 42, 0.06);
+}
+
+.navbar-isi {
+    display: flex;
+    flex-wrap: wrap;                 /* menu ponsel boleh turun ke baris baru */
+    justify-content: space-between;  /* logo di kiri, hamburger di kanan */
+    align-items: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.logo img {
+    height: 36px;
+    width: auto;
+}
+
+/* Checkbox disembunyikan; yang diklik pengguna adalah label hamburger */
+#toggle-menu { display: none; }
+
+.hamburger {
+    font-size: 28px;
+    line-height: 1;
+    color: #ee0b81;
+    cursor: pointer;
+}
+
+.menu {
+    display: none;                   /* di ponsel menu tersembunyi */
+    width: 100%;                     /* saat muncul, isi satu baris penuh */
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 16px;
+}
+
+#toggle-menu:checked ~ .menu {       /* checkbox dicentang -> menu tampil */
+    display: flex;
+}
+
+.menu-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-link a {
+    display: inline-block;
+    padding: 6px 0;
+    color: #16162a;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+.menu-link a:hover { color: #ee0b81; }
+
+.menu-tombol {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ikon-cari {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+}
+.ikon-cari svg {
+    fill: none;
+    stroke: #ee0b81;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+}
+
+@media (min-width: 1024px) {
+    .hamburger { display: none; }
+    .navbar-isi { flex-wrap: nowrap; }
+    .logo img { height: 40px; }
+    .menu {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: auto;
+        padding-top: 0;
+        margin-left: 32px;
+    }
+    .menu-link {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(14px, 1.8vw, 32px);   /* jarak melebar mengikuti layar */
+        margin: 0 auto;
+    }
+    .menu-link li:nth-child(2) a { max-width: 110px; }   /* "Usaha Kecil dan Menengah" jadi dua baris */
+}
+/* ==== [B] HERO ==== */
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.hero-isi {
+    padding-top: 32px;
+    padding-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    max-width: 520px;
+    margin-bottom: 16px;
+}
+
+.hero-teks > p {
+    max-width: 440px;
+    margin-bottom: 28px;
+    color: #16162a;
+    font-weight: 600;
+}
+
+.hero-aksi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Baris kontak: telepon | ikon sosial */
+.hero-kontak {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 32px;
+}
+.hero-kontak .sosial {
+    padding-left: 16px;
+    border-left: 1.5px solid #16162a;   /* garis pemisah tegak */
+}
+
+/* Foto keluarga + panel pink di belakangnya */
+.hero-gambar {
+    position: relative;
+    height: 340px;
+}
+.hero-gambar::before {               /* panel pink */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #fde8f3;
+}
+.hero-gambar > img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: auto;
+    max-width: none;
+    z-index: 2;
+}
+
+/* Dua kapsul putih yang melayang di atas foto */
+.chip-mobil,
+.chip-rumah {
+    position: absolute;
+    z-index: 3;                      /* di depan foto (z-index 2) */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 150px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(22, 22, 42, 0.12);
+    color: #16162a;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.2;
+    text-transform: capitalize;
+}
+.chip-mobil img,
+.chip-rumah img {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+}
+.chip-mobil { top: 8%; left: 4%; }
+.chip-rumah { top: 30%; right: 4%; }
+
+.chip-mobil:hover,
+.chip-rumah:hover { box-shadow: 0 28px 10px rgba(238, 11, 129, 0.25); }
+
+/* Titik penunjuk slide: tegak di sisi kanan, hanya tampil di desktop */
+.hero-titik {
+    display: none;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 10px;
+    z-index: 3;
+}
+
+@media (min-width: 768px) {
+    .hero h1 { font-size: 46px; }
+    .hero-gambar { height: 440px; }
+    .chip-mobil,
+    .chip-rumah { font-size: 14px; }
+}
+@media (min-width: 1024px) {
+    .hero { min-height: 600px; }
+    .hero-isi {
+        padding-top: 110px;
+        padding-bottom: 32px;
+    }
+    .hero h1 { font-size: 56px; }
+    .hero-kontak { padding-bottom: 80px; }
+    .hero-gambar {
+        position: absolute;          /* keluar dari normal flow, pindah ke kanan */
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        height: 100%;
+    }
+    .hero-gambar > img {
+        left: auto;
+        right: 0;
+        transform: none;
+        height: 92%;
+    }
+    .chip-mobil { top: 6%; left: 2%; }
+    .chip-rumah { top: 24%; right: 8%; }
+    .hero-titik { display: flex; }
+}
+/* ==== [C] NILAI PERUSAHAAN ==== */
+.nilai-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   /* ponsel: 2 kolom */
+    gap: 36px 16px;
+    text-align: center;
+}
+.nilai-ikon img {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 12px;
+    object-fit: contain;
+}
+.nilai-ikon h3 {
+    margin-bottom: 6px;
+    font-size: 17px;
+    text-transform: capitalize;      /* "Kerja tim" -> "Kerja Tim" */
+}
+.nilai-ikon p {
+    max-width: 220px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+@media (min-width: 1024px) {
+    .nilai-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 56px 32px;
+    }
+    .nilai-ikon h3 { font-size: 18px; }
+}
+
+/* ==== [D] MITRA BISNIS ==== */
+.mitra { padding: 48px 0 40px; }
+
+.mitra-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   /* ponsel: 2 kolom */
+    gap: 28px 16px;
+    align-items: center;
+    justify-items: center;
+}
+.mitra-list img {
+    width: auto;
+    max-width: 150px;
+    height: 52px;
+    object-fit: contain;
+}
+.titik {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+@media (min-width: 768px) {
+    .mitra-list { grid-template-columns: repeat(4, 1fr); }
+    .mitra-list img {
+        max-width: 190px;
+        height: 64px;
+    }
+}
+
+/* ==== [E] IPDC SEKILAS ==== */
+/* .dua-kolom dan .teks bisa dipakai ulang di bagian lain */
+#tentang { padding: 40px 0; }
+
+.dua-kolom {
+    display: grid;
+    grid-template-columns: 1fr;      /* ponsel: 1 kolom */
+    gap: 32px;
+    align-items: center;             /* foto & teks sejajar di tengah */
+}
+.dua-kolom .foto {
+    aspect-ratio: 11 / 10;
+    object-fit: cover;
+}
+.teks {
+    display: grid;
+    gap: 16px;                       /* jarak antar judul, paragraf, link */
+    justify-items: start;            /* link tidak melebar penuh */
+}
+/* Paragraf dipotong maksimal 9 baris seperti di desain */
+#tentang .teks p {
+    font-size: 15px;
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+    line-clamp: 9;
+    overflow: hidden;
+}
+@media (min-width: 768px) {
+    .dua-kolom {
+        grid-template-columns: 1fr 1fr;   /* 2 kolom sama lebar */
+        gap: 56px;
+    }
+}
+/* ==== [F] LAYANAN KAMI ==== */
+/* Bagian ini tampil sebagai kotak pink yang menjorok dari tepi layar */
+#layanan {
+    width: calc(100% - 32px);
+    max-width: 1256px;
+    margin: 0 auto;
+    padding: 40px 0 48px;
+    border-radius: 16px;
+    background: #fde8f3;
+}
+#layanan .container > h2,
+#layanan .container > p { text-align: center; }
+#layanan .container > p {
+    max-width: 640px;
+    margin: 8px auto 32px;
+    font-size: 15px;
+}
+
+.layanan-list {
+    display: grid;
+    grid-template-columns: 1fr;      /* ponsel: 1 kolom */
+    gap: 28px;
+}
+.kartu {
+    display: grid;
+    gap: 14px;
+}
+.kartu-ikon {
+    width: 100%;
+    aspect-ratio: 133 / 156;         /* foto tegak seperti di desain */
+    overflow: hidden;
+    border-radius: 12px;
+    background: #ffffff;
+}
+.kartu-ikon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.kartu:hover .kartu-ikon img { transform: scale(1.06); }
+
+/* Judul kartu: teks di kiri, lingkaran panah di kanan.
+Karena tanda panah di HTML berupa teks biasa, ukuran font h3 dibuat 0
+(menyembunyikan teks panah itu) lalu <strong> dan ::after diberi ukuran sendiri. */
+.kartu h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0;
+    text-transform: capitalize;
+}
+.kartu h3 strong {
+    max-width: 75%;
+    color: #16162a;
+    font-size: 15px;
+    line-height: 1.35;
+}
+.kartu h3::after {
+    content: "→";
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #f9c9e1;
+    color: #ee0b81;
+    font-size: 15px;
+    line-height: 1;
+}
+.kartu:hover h3::after {
+    background: #ee0b81;
+    color: #ffffff;
+}
+
+@media (min-width: 768px) {
+    .layanan-list { grid-template-columns: repeat(2, 1fr); }
+    #layanan .container { padding: 0 40px; }
+}
+@media (min-width: 1024px) {
+    .layanan-list {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 36px;
+    }
+    #layanan { padding: 56px 0 64px; }
+    #layanan .container { padding: 0 64px; }
+}
+/* ==== [G] PENCAPAIAN ==== */
+.hasil-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   /* ponsel: 2 kolom */
+    gap: 36px 16px;
+    text-align: center;
+}
+.hasil-list strong {
+    display: block;
+    color: #16162a;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 700;
+}
+.hasil-list strong.pink { color: #ee0b81; }
+.hasil-list small {
+    font-size: 0.7em;                /* satuan "M" lebih kecil dari angkanya */
+    font-weight: 700;
+}
+.hasil-list span {
+    display: block;
+    max-width: 180px;
+    margin: 6px auto 0;
+    font-size: 15px;
+    line-height: 1.4;
+}
+@media (min-width: 768px) {
+    .hasil-list {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 48px 24px;
+    }
+    .hasil-list strong { font-size: 32px; }
+}
+@media (min-width: 1024px) {
+    .hasil-list strong { font-size: 36px; }
+}
+
+/* ==== [H] NEWSLETTER ==== */
+.newsletter {
+    padding: 44px 20px;
+    border-radius: 16px;
+    background: #fde8f3;
+    text-align: center;
+}
+.newsletter h2 {
+    margin-bottom: 10px;
+    font-size: 26px;
+}
+.newsletter p { font-size: 14px; }
+
+.langganan {
+    display: flex;
+    flex-direction: column;          /* ponsel: input dan tombol bertumpuk */
+    gap: 12px;
+    max-width: 560px;
+    margin: 28px auto 0;
+}
+.langganan input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #e3d3dc;
+    border-radius: 4px;
+    background: #ffffff;
+    font-size: 14px;
+}
+.langganan input::placeholder { color: #9a9aab; }
+.langganan input:focus { border-color: #ee0b81; }
+
+.langganan .tombol {
+    height: 48px;
+    padding: 0 28px;
+}
+
+@media (min-width: 768px) {
+    .newsletter { padding: 56px 40px; }
+    .newsletter h2 { font-size: 30px; }
+    .langganan {
+        flex-direction: row;         /* tablet ke atas: sebaris */
+        justify-content: center;
+    }
+    .langganan input {
+        flex: 1;
+        max-width: 420px;
+    }
+}
+/* ==== [I] FOOTER ==== */
+.footer {
+    padding: 56px 0 48px;
+    background: #ffffff;
+    color: #4b4b5f;
+    font-size: 14px;
+}
+.footer h4 {
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+.footer-isi {
+    display: grid;
+    grid-template-columns: 1fr;      /* ponsel: 1 kolom */
+    gap: 32px;
+}
+.footer-brand {
+    display: grid;
+    gap: 14px;
+    max-width: 260px;
+    align-content: start;
+}
+.footer-brand h4 { margin-bottom: 0; }
+.footer-brand p { font-size: 13px; }
+.footer-brand .sosial { gap: 16px; }
+.footer-brand .sosial svg {
+    width: 22px;
+    height: 22px;
+}
+.footer-link {
+    display: grid;
+    gap: 10px;
+}
+.footer-link a { font-size: 13px; }
+.footer-link a:hover {
+    color: #ee0b81;
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .footer-isi { grid-template-columns: repeat(3, 1fr); }
+    .footer-brand {
+        grid-column: 1 / -1;         /* kolom brand memanjang satu baris penuh */
+        max-width: 380px;
+    }
+}
+@media (min-width: 1024px) {
+    .footer-isi {
+        grid-template-columns: 1.5fr 1.2fr 1.2fr 1.2fr auto;   /* 5 kolom tidak sama lebar */
+        gap: 40px;
+    }
+    .footer-brand {
+        grid-column: auto;
+        max-width: 240px;
+    }
+    .footer-telepon { justify-self: end; }
+}
